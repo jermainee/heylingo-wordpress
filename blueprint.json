@@ -1,0 +1,15 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/options-general.php?page=heylingo",
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": { "resource": "wordpress.org/plugins", "slug": "plugin-check" }
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/dev-auto-login.php",
+      "data": "<?php\n// Local Playground only: signs every request in as the first user, so no password is needed.\nadd_action( 'init', function () {\n\tif ( ! is_user_logged_in() ) {\n\t\twp_set_current_user( 1 );\n\t\twp_set_auth_cookie( 1, true );\n\t}\n} );\n"
+    }
+  ]
+}
